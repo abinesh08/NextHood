@@ -32,7 +32,7 @@ public class UserService {
         user.setPhoneNumber(dto.getPhoneNumber());
         return UserMapper.toDto(userRepository.save(user));
     }
-    public UserDto getUserByname(String name){
+    public UserDto getUserByName(String name){
         return userRepository.findByName(name)
                 .map(UserMapper::toDto)
                 .orElseThrow(()->new ResourceNotFoundException("User not found: " + name));

@@ -19,12 +19,12 @@ public class UserController {
         return userService.createUser(dto);
     }
     @PutMapping("/{id}")
-    public UserDto update(@PathVariable Long id, @RequestBody UserDto dto){
+    public UserDto update(@PathVariable("id") Long id, @RequestBody UserDto dto){
         return userService.updateUser(id, dto);
     }
     @GetMapping("/name/{name}")
     public UserDto getByName(@PathVariable("name") String name){
-        return userService.getUserByname(name);
+        return userService.getUserByName(name);
     }
     @GetMapping("/id/{id}")
     public UserDto getById(@PathVariable("id") Long id){
@@ -39,7 +39,7 @@ public class UserController {
         return userService.getAllUser();
     }
     @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable("delete") Long id){
+    public String delete(@PathVariable("id") Long id){
         userService.deleteUser(id);
         return "User deleted Successfully";
     }
