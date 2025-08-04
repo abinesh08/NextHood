@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://host.docker.internal:5432/nexthood
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
