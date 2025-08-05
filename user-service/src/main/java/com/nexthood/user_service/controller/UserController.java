@@ -18,26 +18,32 @@ public class UserController {
     public UserDto create(@RequestBody UserDto dto){
         return userService.createUser(dto);
     }
+
     @PutMapping("/{id}")
     public UserDto update(@PathVariable("id") Long id, @RequestBody UserDto dto){
         return userService.updateUser(id, dto);
     }
+
     @GetMapping("/name/{name}")
     public UserDto getByName(@PathVariable("name") String name){
         return userService.getUserByName(name);
     }
+
     @GetMapping("/id/{id}")
     public UserDto getById(@PathVariable("id") Long id){
         return userService.getUserById(id);
     }
+
     @GetMapping("/role/{role}")
     public List<UserDto> getUserByRole(@PathVariable("role") Role role){
         return userService.getUserByRole(role);
     }
+
     @GetMapping
     public List<UserDto> getAll(){
         return userService.getAllUser();
     }
+
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id){
         userService.deleteUser(id);
