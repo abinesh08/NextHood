@@ -55,6 +55,7 @@
         <module>issue-service</module>
         <module>notification-service</module>
         <module>api-gateway</module>
+        <module>common-security</module>
     </modules>
 
 </project>

@@ -1,7 +1,6 @@
 package com.nexthood.user_service.mapper;
 
 import com.nexthood.user_service.dto.UserDto;
-import com.nexthood.user_service.model.Role;
 import com.nexthood.user_service.model.User;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +15,6 @@ class UserMapperTest {
                 .name("John Doe")
                 .email("john@example.com")
                 .location("Chennai")
-                .role(Role.RESIDENT)
                 .phoneNumber("999999999")
                 .build();
 
@@ -25,7 +23,7 @@ class UserMapperTest {
         assertEquals(user.getName(), dto.getName());
         assertEquals(user.getEmail(), dto.getEmail());
         assertEquals(user.getLocation(), dto.getLocation());
-        assertEquals(user.getRole().toString(), dto.getRole());
+
         assertEquals(user.getPhoneNumber(), dto.getPhoneNumber());
     }
     @Test
@@ -44,7 +42,7 @@ class UserMapperTest {
         assertEquals(dto.getName(), user.getName());
         assertEquals(dto.getEmail(), user.getEmail());
         assertEquals(dto.getLocation(), user.getLocation());
-        assertEquals(Role.VOLUNTEER, user.getRole());
+
         assertEquals(dto.getPhoneNumber(), user.getPhoneNumber());
     }
 

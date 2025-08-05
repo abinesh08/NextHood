@@ -1,6 +1,6 @@
 package com.nexthood.auth_service.config;
 
-import com.nexthood.auth_service.util.JwtFilter;
+import com.nexthood.common_security.JwtFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

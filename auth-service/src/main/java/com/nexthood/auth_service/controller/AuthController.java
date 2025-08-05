@@ -5,7 +5,7 @@ import com.nexthood.auth_service.dto.AuthResponse;
 import com.nexthood.auth_service.dto.SignUpRequestDTO;
 import com.nexthood.auth_service.model.User;
 import com.nexthood.auth_service.service.UserService;
-import com.nexthood.auth_service.util.JwtUtil;
+import com.nexthood.common_security.JwtUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -3,7 +3,6 @@ package com.nexthood.user_service.service;
 import com.nexthood.user_service.dto.UserDto;
 import com.nexthood.user_service.exception.ResourceNotFoundException;
 import com.nexthood.user_service.mapper.UserMapper;
-import com.nexthood.user_service.model.Role;
 import com.nexthood.user_service.model.User;
 import com.nexthood.user_service.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,6 @@ public class UserService {
                 .orElseThrow(()-> new ResourceNotFoundException("User not found: " + id));
         user.setName(dto.getName());
         user.setEmail(dto.getEmail());
-        user.setRole(Role.fromString(dto.getRole()));
         user.setLocation(dto.getLocation());
         user.setPhoneNumber(dto.getPhoneNumber());
         return UserMapper.toDto(userRepository.save(user));
@@ -43,11 +41,6 @@ public class UserService {
                 .orElseThrow(()->new ResourceNotFoundException("User not found : " + id));
     }
 
-    public List<UserDto> getUserByRole(Role role){
-        return userRepository.findByRole(role).stream()
-                .map(UserMapper::toDto)
-                .collect(Collectors.toList());
-    }
     public List<UserDto> getAllUser(){
         return userRepository.findAll()
                 .stream().map(UserMapper::toDto)

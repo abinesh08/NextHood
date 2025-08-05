@@ -3,7 +3,6 @@ package com.nexthood.user_service.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nexthood.user_service.config.SecurityConfig;
 import com.nexthood.user_service.dto.UserDto;
-import com.nexthood.user_service.model.Role;
 import com.nexthood.user_service.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -80,13 +79,7 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("John"));
     }
-    @Test
-    void testGetUserByRole() throws Exception{
-        Mockito.when(userService.getUserByRole(Role.RESIDENT)).thenReturn(List.of(dto));
-        mockMvc.perform(get("/user/role/RESIDENT"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.size()").value(1));
-    }
+
     @Test
     void testGetAllUsers() throws Exception {
         Mockito.when(userService.getAllUser()).thenReturn(List.of(dto));
