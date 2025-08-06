@@ -1,6 +1,7 @@
 package com.nexthood.auth_service.config;
 
-import com.nexthood.auth_service.util.JwtFilter;
+
+import com.nexthood.common_security.JwtFilter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

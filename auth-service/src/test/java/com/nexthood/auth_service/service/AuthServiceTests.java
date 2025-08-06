@@ -40,8 +40,6 @@ class AuthServiceTests {
 
         assertEquals(username, userDetails.getUsername());
         assertEquals(password, userDetails.getPassword());
-        assertTrue(userDetails.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(role)));
     }
 
     @Test

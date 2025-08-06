@@ -1,6 +1,5 @@
-package com.nexthood.auth_service.util;
+package com.nexthood.common_security;
 
-import com.nexthood.auth_service.service.AuthService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.Collections;
 
@@ -28,7 +28,7 @@ class JwtFilterTests {
     private JwtUtil jwtUtil;
 
     @Mock
-    private AuthService userService;
+    private UserDetailsService userService;
 
     @Mock
     private HttpServletRequest request;

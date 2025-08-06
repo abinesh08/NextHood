@@ -1,6 +1,6 @@
 package com.nexthood.common_security;
 
-import com.nexthood.common_security.JwtUtil;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

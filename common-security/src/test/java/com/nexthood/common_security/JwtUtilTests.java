@@ -1,10 +1,10 @@
-package com.nexthood.auth_service.util;
+package com.nexthood.common_security;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 
 class JwtUtilTests {
 
@@ -52,3 +52,4 @@ class JwtUtilTests {
         return !jwtUtil.validateToken(token, jwtUtil.extractUsername(token));
     }
 }
+
