@@ -1,6 +1,5 @@
 package com.nexthood.user_service.repository;
 
-import com.nexthood.user_service.model.Role;
 import com.nexthood.user_service.model.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,15 +25,12 @@ class UserRepositoryTest {
                 .name("Arun")
                 .email("arun@gmail.com")
                 .location("Coimbatore")
-                .phoneNumber("7777777777")
-                .role(Role.RESIDENT)
-                .build();
+                .phoneNumber("7777777777").build();
 
         userRepository.save(user);
         Optional<User> result= userRepository.findByName("Arun");
         assertTrue(result.isPresent());
         assertEquals("Arun", result.get().getName());
-        assertEquals(Role.RESIDENT, result.get().getRole());
     }
 
     @Test

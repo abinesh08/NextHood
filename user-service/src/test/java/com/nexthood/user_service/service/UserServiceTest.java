@@ -2,7 +2,6 @@ package com.nexthood.user_service.service;
 
 import com.nexthood.user_service.dto.UserDto;
 import com.nexthood.user_service.exception.ResourceNotFoundException;
-import com.nexthood.user_service.model.Role;
 import com.nexthood.user_service.model.User;
 import com.nexthood.user_service.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +31,7 @@ class UserServiceTest {
 
     @BeforeEach
     void setup(){
-        user= new User(1L, "Abinesh","abinesh@gmail.com","Chennai","9999999999", Role.RESIDENT);
+        user= new User(1L, "Abinesh","abinesh@gmail.com","Chennai","9999999999");
         dto = new UserDto(1L, "Abinesh", "abinesh@gmail.com", "Chennai", "9999999999", "RESIDENT");
     }
     @Test
@@ -77,12 +76,6 @@ class UserServiceTest {
     void testGetUserById_NotFound(){
         when(userRepository.findById(2L)).thenReturn(Optional.empty());
         assertThrows(ResourceNotFoundException.class,()->userService.getUserById(2L));
-    }
-    @Test
-    void testGetUserByRole(){
-        when(userRepository.findByRole(Role.RESIDENT)).thenReturn(List.of(user));
-        List<UserDto> result= userService.getUserByRole(Role.RESIDENT);
-        assertThat(result).hasSize(1);
     }
     @Test
     void testGetAllUser(){

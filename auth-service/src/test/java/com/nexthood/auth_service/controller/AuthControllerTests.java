@@ -4,9 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nexthood.auth_service.dto.AuthRequestDTO;
 import com.nexthood.auth_service.dto.SignUpRequestDTO;
 import com.nexthood.auth_service.model.User;
+import com.nexthood.auth_service.repository.UserRepository;
 import com.nexthood.auth_service.service.UserService;
-import com.nexthood.auth_service.util.JwtFilter;
-import com.nexthood.auth_service.util.JwtUtil;
+import com.nexthood.common_security.JwtFilter;
+import com.nexthood.common_security.JwtUtil;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,9 @@ class AuthControllerTests {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @MockBean
+    private UserRepository userRepository;
 
     @Test
     void login_ShouldReturnToken_WhenCredentialsAreValid() throws Exception {
