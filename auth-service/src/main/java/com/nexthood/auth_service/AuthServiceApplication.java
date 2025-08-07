@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
-		"com.nexthood.auth_service",
+//		"com.nexthood.auth_service",
 		"com.nexthood.common_security"
 })
 public class AuthServiceApplication {

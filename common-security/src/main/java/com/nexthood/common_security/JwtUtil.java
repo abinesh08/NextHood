@@ -15,7 +15,7 @@ import java.util.Date;
 public class JwtUtil  {
 
     @Value("${jwt.secret}")
-    private String secretKey;
+    protected String secretKey;
 
     public String generateToken(String username) {
         SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
@@ -30,7 +30,7 @@ public class JwtUtil  {
 
     public String extractUsername(String token) {
         return Jwts.parser()
-                .setSigningKey(secretKey)
+                .setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
@@ -42,7 +42,7 @@ public class JwtUtil  {
 
     private boolean isTokenExpired(String token) {
         Date expiration = Jwts.parser()
-                .setSigningKey(secretKey)
+                .setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(token)
                 .getBody()
                 .getExpiration();
