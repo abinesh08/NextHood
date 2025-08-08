@@ -32,7 +32,7 @@ class UserServiceTest {
     @BeforeEach
     void setup(){
         user= new User(1L, "Abinesh","abinesh@gmail.com","Chennai","9999999999");
-        dto = new UserDto(1L, "Abinesh", "abinesh@gmail.com", "Chennai", "9999999999", "RESIDENT");
+        dto = new UserDto(1L, "Abinesh", "abinesh@gmail.com", "Chennai", "9999999999");
     }
     @Test
     void testCreateUser(){

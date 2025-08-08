@@ -41,6 +41,11 @@
 			<version>8.0.33</version>
 		</dependency>
 		<dependency>
+			<groupId>com.nexthood</groupId>
+			<artifactId>common-security</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>

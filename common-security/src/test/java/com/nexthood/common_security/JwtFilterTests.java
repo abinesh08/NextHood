@@ -49,11 +49,13 @@ class JwtFilterTests {
     void testValidTokenAuthentication() throws Exception {
         String token = "valid-token";
         String username = "testUser";
+        String role= "ROLE_RESIDENT";
 
         UserDetails userDetails = new User(username, "password", Collections.emptyList());
 
         when(request.getHeader("Authorization")).thenReturn("Bearer " + token);
         when(jwtUtil.extractUsername(token)).thenReturn(username);
+        when(jwtUtil.extractRole(token)).thenReturn(role);
         when(userService.loadUserByUsername(username)).thenReturn(userDetails);
         when(jwtUtil.validateToken(token, username)).thenReturn(true);
 

@@ -1,11 +1,13 @@
 package com.nexthood.user_service.exception;
 
+import com.nexthood.common_security.JwtUtil;
 import com.nexthood.user_service.controller.UserController;
 import com.nexthood.user_service.service.UserService;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -16,13 +18,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
-@Import(SecurityConfig.class)
-@WebMvcTest(UserController.class)
+@WebMvcTest(controllers = UserController.class)
+@Import({GlobalExceptionHandler.class})
 class GlobalExceptionHandlerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
     private UserService userService;
+    @MockBean
+    private JwtUtil jwtUtil;
 
     @Test
     @WithMockUser

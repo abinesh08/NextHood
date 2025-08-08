@@ -21,6 +21,5 @@ public class User {
     private String email;
     private String location;
     private String phoneNumber;
-//    @Enumerated(EnumType.STRING)
-//    private Role role;
+
 }

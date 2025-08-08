@@ -2,6 +2,7 @@ package com.nexthood.auth_service.service;
 
 import com.nexthood.auth_service.model.User;
 import com.nexthood.auth_service.repository.UserRepository;
+import com.nexthood.common_security.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,11 +29,11 @@ class AuthServiceTests {
     void loadUserByUsername_shouldReturnUserDetails_whenUserExists() {
         String username = "testUser";
         String password = "testPass";
-        String role = "ROLE_USER";
+        Role role = Role.RESIDENT;
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
-        user.setRole(role);
+        user.setRole(Role.valueOf(String.valueOf(role)));
 
         when(userRepository.findByUsername(username)).thenReturn(Optional.of(user));
 

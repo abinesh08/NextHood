@@ -33,7 +33,6 @@ class UserMapperTest {
                 .name("Jane")
                 .email("jane@gmail.com")
                 .location("Mumbai")
-                .role("VOLUNTEER")
                 .phoneNumber("9999999999")
                 .build();
 
