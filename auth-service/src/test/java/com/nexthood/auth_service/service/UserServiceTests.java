@@ -3,6 +3,7 @@ package com.nexthood.auth_service.service;
 import com.nexthood.auth_service.dto.SignUpRequestDTO;
 import com.nexthood.auth_service.model.User;
 import com.nexthood.auth_service.repository.UserRepository;
+import com.nexthood.common_security.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -32,7 +33,7 @@ class UserServiceTests {
         SignUpRequestDTO dto = new SignUpRequestDTO();
         dto.setUsername("newUser");
         dto.setPassword("password123");
-        dto.setRole("ROLE_USER");
+        dto.setRole(Role.RESIDENT);
 
         when(userRepository.findByUsername("newUser")).thenReturn(Optional.empty());
         when(passwordEncoder.encode("password123")).thenReturn("encodedPassword");
@@ -40,7 +41,7 @@ class UserServiceTests {
         User savedUser = User.builder()
                 .username("newUser")
                 .password("encodedPassword")
-                .role("ROLE_USER")
+                .role(Role.RESIDENT)
                 .build();
 
         when(userRepository.save(any(User.class))).thenReturn(savedUser);
@@ -50,7 +51,7 @@ class UserServiceTests {
         assertNotNull(result);
         assertEquals("newUser", result.getUsername());
         assertEquals("encodedPassword", result.getPassword());
-        assertEquals("ROLE_USER", result.getRole());
+        assertEquals(Role.RESIDENT, result.getRole());
 
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(userCaptor.capture());
@@ -62,7 +63,7 @@ class UserServiceTests {
         SignUpRequestDTO dto = new SignUpRequestDTO();
         dto.setUsername("existingUser");
         dto.setPassword("password");
-        dto.setRole("ROLE_USER");
+        dto.setRole(Role.RESIDENT);
 
         when(userRepository.findByUsername("existingUser"))
                 .thenReturn(Optional.of(new User()));

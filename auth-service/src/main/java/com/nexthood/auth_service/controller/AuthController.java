@@ -6,6 +6,7 @@ import com.nexthood.auth_service.dto.SignUpRequestDTO;
 import com.nexthood.auth_service.model.User;
 import com.nexthood.auth_service.service.UserService;
 import com.nexthood.common_security.JwtUtil;
+import com.nexthood.common_security.Role;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,7 +36,9 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(requestDTO.getUsername(), requestDTO.getPassword())
         );
 
-        String token = jwtUtil.generateToken(requestDTO.getUsername());
+        User user= userService.findByUsername(requestDTO.getUsername());
+        Role role= Role.valueOf(String.valueOf(user.getRole()));
+        String token = jwtUtil.generateToken(requestDTO.getUsername(), role);
         return ResponseEntity.ok(new AuthResponse(token));
     }
 

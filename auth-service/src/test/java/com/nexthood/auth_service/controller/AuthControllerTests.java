@@ -3,11 +3,13 @@ package com.nexthood.auth_service.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nexthood.auth_service.dto.AuthRequestDTO;
 import com.nexthood.auth_service.dto.SignUpRequestDTO;
+
 import com.nexthood.auth_service.model.User;
 import com.nexthood.auth_service.repository.UserRepository;
 import com.nexthood.auth_service.service.UserService;
 import com.nexthood.common_security.JwtFilter;
 import com.nexthood.common_security.JwtUtil;
+import com.nexthood.common_security.Role;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -53,36 +56,43 @@ class AuthControllerTests {
 
     @Test
     void login_ShouldReturnToken_WhenCredentialsAreValid() throws Exception {
-        AuthRequestDTO request = new AuthRequestDTO();
-        request.setUsername("testUser");
-        request.setPassword("password");
-        String token = "mocked-jwt-token";
+        AuthRequestDTO requestDTO = new AuthRequestDTO();
+        requestDTO.setUsername("testUser");
+        requestDTO.setPassword("testPass");
 
-        Authentication mockAuth = Mockito.mock(Authentication.class);
+        User user = User.builder()
+                .username("testUser")
+                .role(Role.RESIDENT)  // or whatever role
+                .build();
+
+        String mockToken = "mocked-jwt-token";
+        Authentication authentication = Mockito.mock(Authentication.class);
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenReturn(mockAuth);
+                .thenReturn(authentication);
 
-        when(jwtUtil.generateToken("testUser")).thenReturn(token);
+        when(userService.findByUsername(eq("testUser"))).thenReturn(user);
+
+        when(jwtUtil.generateToken(eq("testUser"), eq(Role.RESIDENT)))
+                .thenReturn(mockToken);
 
         mockMvc.perform(post("/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+                        .content("{\"username\":\"testUser\", \"password\":\"testPass\"}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.token").value(token));
+                .andExpect(jsonPath("$.token").value(mockToken));
     }
-
     @Test
     void signUp_ShouldReturnSavedUser() throws Exception {
         SignUpRequestDTO dto = new SignUpRequestDTO();
         dto.setUsername("newUser");
         dto.setPassword("pass123");
-        dto.setRole("ROLE_USER");
+        dto.setRole(Role.valueOf("AUTHORITY"));
 
         User savedUser = User.builder()
                 .id(1L)
                 .username("newUser")
                 .password("encodedpass")
-                .role("ROLE_USER")
+                .role(Role.valueOf("AUTHORITY"))
                 .build();
 
         when(userService.register(any(SignUpRequestDTO.class))).thenReturn(savedUser);
@@ -92,6 +102,6 @@ class AuthControllerTests {
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value("newUser"))
-                .andExpect(jsonPath("$.role").value("ROLE_USER"));
+                .andExpect(jsonPath("$.role").value("AUTHORITY"));
     }
 }

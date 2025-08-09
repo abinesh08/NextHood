@@ -1,16 +1,17 @@
 server:
-  port: 8082
+  port: 8080
 
 spring:
-  application:
-    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: auth-service
+          uri: http://localhost:8083
+          predicates:
+          - Path=/auth/**
 
-  datasource:
-    url: jdbc:mysql://localhost:3306/nexthood
-    username: root
-    password: root
+        - id: user-service
+          uri: http://localhost:8086
+          predicates:
+          - Path=/user/**
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true

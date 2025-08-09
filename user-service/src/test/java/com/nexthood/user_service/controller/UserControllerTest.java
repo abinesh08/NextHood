@@ -1,6 +1,7 @@
 package com.nexthood.user_service.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nexthood.common_security.JwtUtil;
 import com.nexthood.user_service.config.SecurityConfig;
 import com.nexthood.user_service.dto.UserDto;
 import com.nexthood.user_service.service.UserService;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -22,7 +24,7 @@ import static org.mockito.ArgumentMatchers.eq;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+@AutoConfigureMockMvc(addFilters = false)
 @Import(SecurityConfig.class)
 @WebMvcTest(UserController.class)
 class UserControllerTest {
@@ -35,13 +37,14 @@ class UserControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @MockBean
+    private JwtUtil jwtUtil;
     @BeforeEach
     void setUp(){
         dto=UserDto.builder()
                 .id(1L)
                 .name("John")
-                .email("john@Gmail.com")
-                .role("RESIDENT")
+                .email("john@gmail.com")
                 .location(("Chennai"))
                 .phoneNumber("9999999999")
                 .build();
@@ -63,7 +66,7 @@ class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.email").value("john@Gmail.com"));
+                .andExpect(jsonPath("$.email").value("john@gmail.com"));
     }
     @Test
     void testGetUserById() throws Exception{
