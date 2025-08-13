@@ -4,13 +4,13 @@ server:
 spring:
   application:
     name: notification-service
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
 
-  datasource:
-    url: jdbc:mysql://localhost:3306/nexthood
-    username: root
-    password: root
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+jwt:
+  secret: ThisIsAReallyLongAndSecureSecretKey1234567890!
