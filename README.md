@@ -9,7 +9,7 @@ NextHood is a powerful, community-driven platform designed to improve local gove
 - 🔐 **User Management** (Resident / Volunteer / Admin roles with JWT auth)
 - 🆘 **Issue Reporting** (Geo-tagged, image upload, auto-addressing)
 - 🛠️ **Resolution Workflow** (Status tracking, comments, notifications)
-- 📢 **Notification System** (SMS/Email updates via Twilio/SendGrid/JavaMailSender)
+- 📢 **Notification System** (Email updates via JavaMailSender)
 - 👍👎 **Community Feedback** (Voting and moderated comments)
 - 📊 **Admin Dashboard** (Heatmaps, analytics, response times)
 
@@ -23,7 +23,7 @@ NextHood is a powerful, community-driven platform designed to improve local gove
 | Database      | MySQL (AWS RDS), Spring Data JPA              |
 | File Storage  | AWS S3 (for images)                           |
 | Hosting       | AWS EC2                                       |
-| Notifications | Twilio (SMS), JavaMailSender (Email)          |
+| Notifications | JavaMailSender (Email)          |
 | Maps & Geo    | Google Maps API, OpenCage Geocoder            |
 | Testing       | JUnit, Mockito                                |
 | DevOps        | Docker, Maven                                 |
