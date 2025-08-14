@@ -26,7 +26,7 @@ public class Notification {
     @Column(nullable = false)
     private String message;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name="type", nullable = false, length = 20)
     private NotificationType type;
     private OffsetDateTime sendAt;
     private String meta;

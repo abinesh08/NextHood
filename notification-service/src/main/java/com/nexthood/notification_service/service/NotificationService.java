@@ -61,6 +61,43 @@ public class NotificationService {
             }catch (Exception e){
                 meta= e.getMessage();
             }
+        }else if (requestDto.getType() == NotificationType.SMS) {
+            if (user.getPhoneNumber() == null) {
+                throw new RuntimeException("User phone number missing");
+            }
+            System.out.println("Notification type: " + requestDto.getType());
+            try {
+                String smsApiUrl = "https://www.fast2sms.com/dev/bulkV2";
+
+                HttpHeaders smsHeader = new HttpHeaders();
+                smsHeader.setContentType(MediaType.APPLICATION_JSON);
+                smsHeader.set("Authorization", "jdiszBSpYJFflxWIEkvX41RPC9ZnwKV8uhGUT7HetQLra5OqND3lU1XcgrGqPKBvTJmiwaR47VY5OSsN"); // replace with real key
+
+                String smsBody = String.format(
+                        "{ \"route\":\"q\", \"message\":\"%s\", \"language\":\"english\", \"flash\":0, \"numbers\":\"%s\" }",
+                        requestDto.getMessage(),
+                        user.getPhoneNumber()
+                );
+
+                HttpEntity<String> smsEntity = new HttpEntity<>(smsBody, smsHeader);
+
+                // Use String.class because Fast2SMS returns a JSON string
+                ResponseEntity<String> smsResponse = restTemplate.exchange(
+                        smsApiUrl,
+                        HttpMethod.POST,
+                        smsEntity,
+                        String.class
+                );
+
+                if (smsResponse.getStatusCode() == HttpStatus.OK) {
+                    status = "SENT";
+                    meta = smsResponse.getBody();
+                } else {
+                    meta = "Failed to send SMS: " + smsResponse.getStatusCode();
+                }
+            } catch (Exception e) {
+                meta = e.getMessage();
+            }
         }
         Notification notification = NotificationMapper.toEntity(requestDto, status, meta);
         notificationRepository.save(notification);
