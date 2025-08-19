@@ -1,0 +1,47 @@
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: app-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: maindb
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  notification-service:
+    build: ./notification-service
+    container_name: notification-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - db
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+  auth-service:
+    build: ./auth-service
+    container_name: auth-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - db
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    ports:
+      - "8086:8086"
+    depends_on:
+      - db
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+volumes:
+  db_data: {}
